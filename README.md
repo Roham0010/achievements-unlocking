@@ -4,6 +4,7 @@
     - Create achievements levels
     - Seed the achievements and levels
 - Create UserAchievements model and table (10m)
+- Create UserUnlockedAchievements model and table (10m)
 - Achievements service (3h)
     - Comment Written event
     - Lesson Watched event
@@ -17,4 +18,3 @@
     - Badge unlocked
 - Achievements endpoint (1h)
     - Tests
-
