@@ -17,6 +17,9 @@ class Achievement extends Model
 {
     use HasFactory;
 
+    const ACHIEVEMENT_TYPE = 'achievement';
+    const BADGE_TYPE = 'badge';
+
     public $fillable = [
         'type',
         'name',

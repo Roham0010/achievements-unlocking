@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property integer $id
@@ -20,4 +21,9 @@ class UserUnlockedAchievement extends Model
         'achievement_id',
         'achievement_level_id',
     ];
+
+    public function achievementLevel(): BelongsTo
+    {
+        return $this->belongsTo(AchievementLevel::class);
+    }
 }

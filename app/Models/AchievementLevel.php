@@ -22,8 +22,54 @@ class AchievementLevel extends Model
         'label',
     ];
 
+    public static function defaultBadge(): AchievementLevel
+    {
+        return AchievementLevel::query()
+            ->whereHas('achievement', function ($q) {
+                $q->where('type', Achievement::BADGE_TYPE);
+            })
+            ->orderBy('count')
+            ->limit(1)
+            ->get()[0];
+    }
+
+    public static function firstOfEachAchievement(): array
+    {
+        $achievementLevels = AchievementLevel::query()
+            ->whereHas('achievement', function ($q) {
+                $q->where('type', Achievement::ACHIEVEMENT_TYPE);
+            })
+            ->orderBy('count')
+            ->get()
+            ->groupBy('achievement_id');
+
+        $results = [];
+        /** @var AchievementLevel $level */
+        foreach ($achievementLevels as $level) {
+            $results[] = $level->first()->label;
+        }
+
+        return $results;
+    }
+
     public function achievement(): BelongsTo
     {
         return $this->belongsTo(Achievement::class);
+    }
+
+    public function nextAchievementOf(): ?AchievementLevel
+    {
+        return AchievementLevel::query()
+            ->where('achievement_id', $this->achievement_id)
+            ->where('count', '>', $this->count)
+            ->orderBy('count')
+            ->limit(1)
+            ->get()[0];
+//        if (!$al) {
+//            $al = AchievementLevel::query()
+//                ->where('achievement_id', $this->achievement_id)
+//                ->orderBy('count')
+//                ->first();
+//        }
     }
 }

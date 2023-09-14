@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Comment;
 use App\Models\Lesson;
 use Illuminate\Database\Seeder;
 
@@ -16,6 +17,6 @@ class DatabaseSeeder extends Seeder
 
         $lessons = Lesson::factory()->count(20)->create();
 
-        $comments = Lesson::factory()->count(5)->create();
+        $comments = Comment::factory()->count(5)->create();
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -41,4 +42,26 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function achievements($achievementId): HasMany
+    {
+        return $this->hasMany(UserAchievement::class)->where('achievementId', $achievementId);
+    }
+
+    public function unlockedAchievementsById($achievementId): HasMany
+    {
+        return $this->hasMany(UserAchievement::class)->where('achievementId', $achievementId);
+    }
+
+    public function unlockedAchievements(): HasMany
+    {
+        return $this->hasMany(UserAchievement::class);
+    }
+
+    public function unlockedAchievementsByType(string $type): HasMany
+    {
+        return $this->hasMany(UserUnlockedAchievement::class)->whereIn('achievement_id', function ($q) use ($type) {
+            return $q->select('id')->from('achievements')->where('type', $type);
+        })->with('achievementLevel');
+    }
 }
