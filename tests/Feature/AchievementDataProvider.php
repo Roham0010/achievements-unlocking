@@ -19,7 +19,7 @@ class AchievementDataProvider extends TestCase
         $levels = $achievement->levels->sortBy('count');
 
         for ($i = 0; $i < $count; $i++) {
-            $this->user->achievement()->create([
+            $this->user->achievements()->create([
                 'achievement_id' => $achievement->id,
             ]);
 

@@ -66,7 +66,7 @@ class AchievementService
         );
 
         if (($previousUnlockedAchievement->count ?? -1) !== $this->newUnlockedAchievement->count) {
-            $this->checkForAchievementUnlocking();
+            $this->storeUnlockedAchievementAndFireTheEvents();
         }
     }
 
@@ -90,7 +90,7 @@ class AchievementService
         return $userUnlockedAchievement;
     }
 
-    protected function checkForAchievementUnlocking(): void
+    protected function storeUnlockedAchievementAndFireTheEvents(): void
     {
         //
     }

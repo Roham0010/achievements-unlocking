@@ -205,8 +205,6 @@ class AchievementsTest extends AchievementDataProvider
         $this->setUserAchievement('lesson', 5);
         $this->setUserAchievement('comment', 5);
 
-        $response = $this->getAchievementsEndpointResponse();
-
         $this->assertDatabaseHas('user_achievements', [
             'user_id' => $this->user->id
         ]);

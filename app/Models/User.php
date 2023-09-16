@@ -52,12 +52,12 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function achievement(): HasMany
+    public function achievements(): HasMany
     {
         return $this->hasMany(UserAchievement::class);
     }
 
-    public function achievements($achievementId): HasMany
+    public function achievementsById($achievementId): HasMany
     {
         return $this->hasMany(UserAchievement::class)->where('achievement_id', $achievementId);
     }
