@@ -4,7 +4,6 @@ namespace App\AchievementService;
 
 use App\Models\Achievement;
 use App\Models\AchievementLevel;
-use App\Models\Badges;
 use App\Models\User;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
