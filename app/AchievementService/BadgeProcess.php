@@ -17,7 +17,12 @@ class BadgeProcess extends AchievementService
      */
     protected function getPreviousCountOfAchievements(): int
     {
-        return $this->user->unlockedAchievements()->count() - 1;
+        return $this->user->achievement()->count() - 1;
+    }
+
+    protected function checkForAchievementUnlocking(): void
+    {
+        $this->fireTheEvent();
     }
 
     protected function fireTheEvent(): void

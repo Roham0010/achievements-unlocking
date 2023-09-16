@@ -6,6 +6,7 @@ use App\Models\Achievement;
 use App\Models\AchievementLevel;
 use App\Models\Badges;
 use App\Models\User;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 
 class AchievementService
@@ -15,10 +16,9 @@ class AchievementService
     protected User $user;
     protected Achievement $achievement;
 
-    protected array $achievementLevels;
+    protected Collection $achievementLevels;
     protected AchievementLevel $newUnlockedAchievement;
 
-    protected string $type;
     protected string $name;
 
     public function __construct(User $user, string $name)
@@ -35,17 +35,18 @@ class AchievementService
 
     private function setAchievement(): void
     {
-        $this->achievement = Cache::remember('achievement', 10, function () {
-            return Achievement::query()
-                ->where('type', static::ACHIEVEMENT_TYPE)
-                ->where('name', $this->name)
-                ->get();
-        });
+        $this->achievement =
+            Cache::remember('achievement' . static::ACHIEVEMENT_TYPE . $this->name, 10, function () {
+                return Achievement::query()
+                    ->where('type', static::ACHIEVEMENT_TYPE)
+                    ->where('name', $this->name)
+                    ->first();
+            });
     }
 
     private function setAchievementLevels(): void
     {
-        $this->achievementLevels = Cache::remember('achievements', 60, function () {
+        $this->achievementLevels = Cache::remember('achievements' . $this->name, 60, function () {
             return $this->achievement->levels()
                 ->orderBy('count')
                 ->get();
@@ -54,23 +55,19 @@ class AchievementService
 
     public function handleAchievementsAndEvents(): void
     {
-        $previousUserCommentAchievementsCount = $this->getPreviousCountOfAchievements();
-        $newCommentAchievementsCount = $previousUserCommentAchievementsCount + 1;
+        $previousUserAchievementsCount = $this->getPreviousCountOfAchievements();
+        $newAchievementsCount = $previousUserAchievementsCount + 1;
 
         $previousUnlockedAchievement = $this->getUnlockedAchievementsBasedOnCount(
-            $previousUserCommentAchievementsCount
+            $previousUserAchievementsCount
         );
 
         $this->newUnlockedAchievement = $this->getUnlockedAchievementsBasedOnCount(
-            $newCommentAchievementsCount
+            $newAchievementsCount
         );
 
-        if ($previousUnlockedAchievement->count !== $this->newUnlockedAchievement->count) {
-            $this->user->unlockedAchievementsById($this->achievement->id)->create([
-                'achievement_level_id' => $this->newUnlockedAchievement->id
-            ]);
-
-            $this->fireTheEvent();
+        if (($previousUnlockedAchievement->count ?? -1) !== $this->newUnlockedAchievement->count) {
+            $this->checkForAchievementUnlocking();
         }
     }
 
@@ -85,7 +82,7 @@ class AchievementService
 
         foreach ($this->achievementLevels as $achievementLevel) {
             if ($achievementLevel->count > $count) {
-                continue;
+                break;
             }
 
             $userUnlockedAchievement = $achievementLevel;
@@ -94,8 +91,16 @@ class AchievementService
         return $userUnlockedAchievement;
     }
 
+    protected function checkForAchievementUnlocking(): void
+    {
+        //
+    }
+
     protected function fireTheEvent(): void
     {
-        return;
+    }
+
+    protected function addThisAchievement(): void
+    {
     }
 }

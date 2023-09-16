@@ -22,17 +22,6 @@ class AchievementLevel extends Model
         'label',
     ];
 
-    public static function defaultBadge(): AchievementLevel
-    {
-        return AchievementLevel::query()
-            ->whereHas('achievement', function ($q) {
-                $q->where('type', Achievement::BADGE_TYPE);
-            })
-            ->orderBy('count')
-            ->limit(1)
-            ->get()[0];
-    }
-
     public static function firstOfEachAchievement(): array
     {
         $achievementLevels = AchievementLevel::query()
@@ -64,12 +53,6 @@ class AchievementLevel extends Model
             ->where('count', '>', $this->count)
             ->orderBy('count')
             ->limit(1)
-            ->get()[0];
-//        if (!$al) {
-//            $al = AchievementLevel::query()
-//                ->where('achievement_id', $this->achievement_id)
-//                ->orderBy('count')
-//                ->first();
-//        }
+            ->get()[0] ?? null;
     }
 }

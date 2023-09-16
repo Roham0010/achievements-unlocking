@@ -10,7 +10,17 @@ class AchievementProcess extends AchievementService
 
     protected function getPreviousCountOfAchievements(): int
     {
-        return $this->user->achievements($this->achievement->id)->count();
+        return $this->user->achievements($this->achievement->id)->count() - 1;
+    }
+
+    protected function checkForAchievementUnlocking(): void
+    {
+        $this->user->unlockedAchievementsById($this->achievement->id)->create([
+            'achievement_id' => $this->achievement->id,
+            'achievement_level_id' => $this->newUnlockedAchievement->id,
+        ]);
+
+        $this->fireTheEvent();
     }
 
     protected function fireTheEvent(): void

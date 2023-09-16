@@ -20,7 +20,7 @@ class UserAchievement extends Model
 
     public $fillable = [
         'user_id',
-        'achievement_type',
+        'achievement_id',
     ];
 
     public function user(): BelongsTo
