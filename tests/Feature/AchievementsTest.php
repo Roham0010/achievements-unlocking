@@ -68,7 +68,7 @@ class AchievementsTest extends AchievementDataProvider
             ],
             'current_badge' => 'Beginner',
             'next_badge' => 'Intermediate',
-            'remaining_to_unlock_next_badge' => 4,
+            'remaining_to_unlock_next_badge' => 3,
         ]);
     }
 
@@ -88,7 +88,7 @@ class AchievementsTest extends AchievementDataProvider
             ],
             'current_badge' => 'Beginner',
             'next_badge' => 'Intermediate',
-            'remaining_to_unlock_next_badge' => 4,
+            'remaining_to_unlock_next_badge' => 3,
         ]);
     }
 

@@ -37,10 +37,12 @@ class AchievementsController extends Controller
 
         $nextBadge = $user->nextBadge($currentBadge);
 
+        $countAchievements = $user->unlockedAchievements()->count();
+        $countAchievementsForRemainingBadge = min($countAchievements, 10);
         return [
             $currentBadge->label,
             $nextBadge->label ?? '',
-            ($nextBadge->count ?? $currentBadge->count) - $currentBadge->count
+            ($nextBadge->count ?? $currentBadge->count) - $countAchievementsForRemainingBadge
         ];
     }
 }
