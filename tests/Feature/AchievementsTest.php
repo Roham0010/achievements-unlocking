@@ -5,6 +5,8 @@ namespace Tests\Feature;
 use App\Events\AchievementUnlockedEvent;
 use App\Events\BadgeUnlockedEvent;
 use App\Models\Achievement;
+use App\Models\UserAchievement;
+use App\Models\UserUnlockedAchievement;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Event;
 
@@ -212,7 +214,7 @@ class AchievementsTest extends AchievementDataProvider
             'user_id' => $this->user->id
         ]);
 
-        $this->assertDatabaseCount('user_achievements', 10);
-        $this->assertDatabaseCount('user_unlocked_achievements', 5);
+        $this->assertDatabaseCount(UserAchievement::where('user_id', $this->user->id), 10);
+        $this->assertDatabaseCount(UserUnlockedAchievement::where('user_id', $this->user->id), 5);
     }
 }
