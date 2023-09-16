@@ -11,6 +11,8 @@ class LessonWatched
 {
     use Dispatchable, SerializesModels;
 
+    const TYPE = 'lesson';
+
     public Lesson $lesson;
     public User $user;
 
