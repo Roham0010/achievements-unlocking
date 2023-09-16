@@ -11,46 +11,46 @@ class AchievementSeeder extends Seeder
         'achievement' => [
             'lesson' => [
                 [
-                    'count' => 0,
+                    'count' => 1,
                     'label' => 'First Lesson Watched',
                 ],
                 [
                     'count' => 5,
-                    'label' => '5 Lesson Watched',
+                    'label' => '5 Lessons Watched',
                 ],
                 [
                     'count' => 10,
-                    'label' => '10 Lesson Watched',
+                    'label' => '10 Lessons Watched',
                 ],
                 [
                     'count' => 25,
-                    'label' => '25 Lesson Watched',
+                    'label' => '25 Lessons Watched',
                 ],
                 [
                     'count' => 50,
-                    'label' => '50 Lesson Watched',
+                    'label' => '50 Lessons Watched',
                 ],
             ],
             'comment' => [
                 [
-                    'count' => 0,
+                    'count' => 1,
                     'label' => 'First Comment Written',
                 ],
                 [
                     'count' => 3,
-                    'label' => '3 Comment Written',
+                    'label' => '3 Comments Written',
                 ],
                 [
                     'count' => 5,
-                    'label' => '5 Comment Written',
+                    'label' => '5 Comments Written',
                 ],
                 [
                     'count' => 10,
-                    'label' => '10 Comment Written',
+                    'label' => '10 Comments Written',
                 ],
                 [
                     'count' => 20,
-                    'label' => '20 Comment Written',
+                    'label' => '20 Comments Written',
                 ],
             ],
         ],
@@ -58,19 +58,19 @@ class AchievementSeeder extends Seeder
             'badge' => [
                 [
                     'count' => 0,
-                    'label' => 'Beginner: 0 Achievements',
+                    'label' => 'Beginner',
                 ],
                 [
                     'count' => 4,
-                    'label' => 'Intermediate: 4 Achievements',
+                    'label' => 'Intermediate',
                 ],
                 [
                     'count' => 8,
-                    'label' => 'Advanced: 8 Achievements',
+                    'label' => 'Advanced',
                 ],
                 [
                     'count' => 10,
-                    'label' => 'Master: 10 Achievements',
+                    'label' => 'Master',
                 ],
             ]
         ]
